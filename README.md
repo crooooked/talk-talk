@@ -18,3 +18,11 @@ conversation
 * ### Chat with your friends in the same local area network(text/audio/image)
 * ### View your recent friends that you have talked
 * ### Manage your own information
+
+# Main UI
+![login] https://github.com/crooooked/talk-talk/blob/master/image/login.png
+![register] https://github.com/crooooked/talk-talk/blob/master/image/register.png
+![conversation] https://github.com/crooooked/talk-talk/blob/master/image/conversation.png
+![chatdetail] https://github.com/crooooked/talk-talk/blob/master/image/chatdetail.png
+![friend] https://github.com/crooooked/talk-talk/blob/master/image/friend.png
+![my] https://github.com/crooooked/talk-talk/blob/master/image/my.png
