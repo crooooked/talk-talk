@@ -15,6 +15,6 @@ conversation
 # Function
 * ### Login/rgister function
 * ### Connect Wifi
-* ### Chat with your friends in the same local area network
+* ### Chat with your friends in the same local area network(text/audio/image)
 * ### View your recent friends that you have talked
 * ### Manage your own information
