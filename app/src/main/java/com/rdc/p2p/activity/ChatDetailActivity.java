@@ -44,6 +44,7 @@ import android.widget.TextView;
 import com.rdc.p2p.R;
 import com.rdc.p2p.adapter.MsgRvAdapter;
 import com.rdc.p2p.adapter.PeerListRvAdapter$ItemHolder_ViewBinding;
+import com.rdc.p2p.app.App;
 import com.rdc.p2p.base.BaseActivity;
 import com.rdc.p2p.bean.PeerBean;
 import com.rdc.p2p.config.FileState;
@@ -106,6 +107,8 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
     TextView mTvPressedStartRecord;
     @BindView(R.id.iv_file_act_chat_detail)
     ImageView mIvFile;
+    @BindView(R.id.my_bg)
+    ImageView mBg;
 
 
     private MsgRvAdapter mMsgRvAdapter;
@@ -150,6 +153,12 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        if(App.getBg()!=null)
+        {
+            mRvMsgList.setBackground(null);
+            mBg.setImageBitmap(App.getBg());
+        }
+        if(App.getBg()==null)System.out.println("图片为空");
     }
 
     @Override
@@ -196,48 +205,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
 
     @Override
     public void onBackPressed() {
-//        final List<MessageBean> list = new ArrayList<>();
-//        for (MessageBean messageBean : mMsgRvAdapter.getDataList()) {
-//            if (messageBean.isMine()){
-//                if (messageBean.getMsgType() == Protocol.FILE){
-//                    switch (messageBean.getFileState()){
-//                        case FileState.RECEIVE_FILE_START:
-//                        case FileState.RECEIVE_FILE_ING:
-//                        case FileState.SEND_FILE_ING:
-//                            list.add(messageBean);
-//                            break;
-//                    }
-//                }else if (messageBean.getSendStatus() == Constant.SEND_MSG_ING){
-//                    list.add(messageBean);
-//                }
-//            }
-//        }
-//        Log.d(TAG, "onBackPressed: "+list.toString());
-//        if (list.size() > 0){
-//            final AlertDialog.Builder builder = new AlertDialog.Builder(ChatDetailActivity.this);
-//            builder.setTitle("提示");
-//            builder.setMessage("数据正在传输中，退出将终止传输！");
-//            builder.setCancelable(false);
-//            builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    for (MessageBean messageBean : list) {
-//                        messageBean.delete();
-//                    }
-//                    dialogInterface.dismiss();
-//                    finish();
-//                }
-//            });
-//            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    dialogInterface.dismiss();
-//                }
-//            });
-//            builder.show();
-//        }else {
-            super.onBackPressed();
-//        }
+        super.onBackPressed();
     }
 
     @Override
@@ -276,6 +244,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
         mPwMicrophone.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         mIvMicrophone = view.findViewById(R.id.iv_microphone_popupWindow);
         mTvRecordTime = view.findViewById(R.id.tv_record_time_popupWindow);
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -308,7 +277,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
                                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                                 ClipData cd = ClipData.newPlainText("Label", mMsgRvAdapter.getDataList().get(position).getText());
                                 cm.setPrimaryClip(cd);
-                                showToast("已复制");
+                                showToast("Replicated");
                                 break;
                         }
                         return true;
@@ -332,12 +301,12 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
                         intent.setDataAndType(SDUtil.getFileUri(bean.getFilePath()),mineType);
                         List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, 0);
                         if (list.size() == 0){
-                            showToast("无法打开此类型的文件!");
+                            showToast("Cannot open file for this type!");
                         }else {
                             startActivity(intent);
                         }
                     }else {
-                        showToast("无法打开此类型的文件!");
+                        showToast("Cannot open file for this type!");
                     }
                 }
             }
@@ -346,7 +315,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
             public void onAlterClick(int position) {
                 if (SocketManager.getInstance().isClosedSocket(mTargetPeerIp)){
                     linkSocket();
-                    showToast("连接Socket中");
+                    showToast("Connect to Socket...");
                 }else {
                     MessageBean messageBean = mMsgRvAdapter.getDataList().get(position);
                     messageBean.setSendStatus(Constant.SEND_MSG_ING);
@@ -509,14 +478,14 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    showToast("拒绝授权，无法使用相机！");
+                    showToast("Deny authorization, cannot use camera!");
                 }
                 break;
             case 3:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 } else {
-                    showToast("拒绝授权，无法录音！");
+                    showToast("Deny authorization, cannot record!");
                 }
                 break;
         }
@@ -535,7 +504,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
                     imageMsg.setSendStatus(Constant.SEND_MSG_ING);
                     mMsgRvAdapter.appendData(imageMsg);
                     mHandler.sendEmptyMessage(SCROLL_NOW);
-                    EventBus.getDefault().post(new RecentMsgEvent("图片",mTargetPeerIp));
+                    EventBus.getDefault().post(new RecentMsgEvent("image",mTargetPeerIp));
                     presenter.sendMsg(imageMsg,mMsgRvAdapter.getItemCount()-1);
                 }
                 break;
@@ -548,7 +517,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
                     imageMsg.setSendStatus(Constant.SEND_MSG_ING);
                     mMsgRvAdapter.appendData(imageMsg);
                     mHandler.sendEmptyMessage(SCROLL_NOW);
-                    EventBus.getDefault().post(new RecentMsgEvent("图片",mTargetPeerIp));
+                    EventBus.getDefault().post(new RecentMsgEvent("image",mTargetPeerIp));
                     presenter.sendMsg(imageMsg,mMsgRvAdapter.getItemCount()-1);
                 }
                 break;
@@ -566,7 +535,7 @@ public class ChatDetailActivity extends BaseActivity<ChatDetailPresenter> implem
                     fileMsg.setFileState(FileState.SEND_FILE_ING);
                     mMsgRvAdapter.appendData(fileMsg);
                     mHandler.sendEmptyMessage(SCROLL_NOW);
-                    EventBus.getDefault().post(new RecentMsgEvent("文件",mTargetPeerIp));
+                    EventBus.getDefault().post(new RecentMsgEvent("file",mTargetPeerIp));
                     presenter.sendMsg(fileMsg,mMsgRvAdapter.getItemCount()-1);
                 }
                 break;

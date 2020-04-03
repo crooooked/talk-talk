@@ -18,9 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by ThatNight on 2017.5.13.
- */
+
 
 public class GsonUtil {
     private static Gson sGson;

@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import com.rdc.p2p.app.App;
 import com.rdc.p2p.bean.UserBean;
 
-/**
- * Created by Lin Yaotian on 2018/5/1.
- */
+
 public class UserUtil {
 
     public static void saveMyIp(String ip){

@@ -5,9 +5,7 @@ import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Lin Yaotian on 2018/5/16.
- */
+
 public class PeerBean {
     private int userImageId;
     private String nickName;

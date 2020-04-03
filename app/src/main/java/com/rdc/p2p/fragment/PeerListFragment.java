@@ -24,6 +24,7 @@ import com.rdc.p2p.activity.ChatDetailActivity;
 import com.rdc.p2p.adapter.PeerListRvAdapter;
 import com.rdc.p2p.base.BaseFragment;
 import com.rdc.p2p.config.FileState;
+import com.rdc.p2p.database.DBOpenHelper;
 import com.rdc.p2p.event.LinkSocketRequestEvent;
 import com.rdc.p2p.bean.MessageBean;
 import com.rdc.p2p.bean.PeerBean;
@@ -38,15 +39,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 
-/**
- * Created by Lin Yaotian on 2018/5/16.
- */
+
 public class PeerListFragment extends BaseFragment<PeerListPresenter> implements PeerListContract.View  {
 
     public static final String TAG = "PeerListFragment";
@@ -199,7 +199,7 @@ public class PeerListFragment extends BaseFragment<PeerListPresenter> implements
     public void messageReceived(MessageBean messageBean) {
         PeerBean peer = mPeerListRvAdapter.updateItemText(messageBean.getText(),messageBean.getUserIp());
         if (peer == null){
-            showToast("收到成员列表以外的消息！");
+            showToast("Receive messages outside member lists!");
         }else {
             EventBus.getDefault().post(messageBean);
         }
@@ -223,6 +223,15 @@ public class PeerListFragment extends BaseFragment<PeerListPresenter> implements
             mPeerListRvAdapter.updateItem(peerBean);
         }else {
             mPeerListRvAdapter.addItem(peerBean);
+            new Thread() {
+                public void run() {
+                    Connection conn = null;
+                    conn = (Connection) DBOpenHelper.getConn();
+                    int flag = 0;
+                    flag = DBOpenHelper.add_friend(conn, null, peerBean.getNickName());
+                    if (flag == 1) System.out.println("Add contacts success");
+                }
+            }.start();
         }
         EventBus.getDefault().post(new LinkSocketResponseEvent(true,peerBean));
     }
@@ -247,7 +256,7 @@ public class PeerListFragment extends BaseFragment<PeerListPresenter> implements
 
     @Override
     public void linkPeerSuccess(String ip) {
-        showToast("连接 Socket 成功！");
+        showToast("Connect Socket successfully!");
     }
 
     @Override
@@ -268,7 +277,7 @@ public class PeerListFragment extends BaseFragment<PeerListPresenter> implements
         public void onReceive(Context context, Intent intent) {
             switch (intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0)) {
                 case WifiManager.WIFI_STATE_ENABLED:
-                    Log.d(TAG, "打开");
+                    Log.d(TAG, "open");
                     //已打开
                     if (!mPresenter.isServerSocketConnected()){
                         mHandler.sendEmptyMessage(INIT_SERVER_SOCKET);
@@ -276,20 +285,20 @@ public class PeerListFragment extends BaseFragment<PeerListPresenter> implements
                     break;
                 case WifiManager.WIFI_STATE_ENABLING:
                     //打开中
-                    Log.d(TAG, "打开中");
+                    Log.d(TAG, "Open up");
                     break;
                 case WifiManager.WIFI_STATE_DISABLED:
                     //已关闭
-                    Log.d(TAG, "已关闭");
+                    Log.d(TAG, "Closed");
                     break;
                 case WifiManager.WIFI_STATE_DISABLING:
                     //关闭中
-                    Log.d(TAG, "关闭中");
+                    Log.d(TAG, "Closed down");
                     mPresenter.disconnect();
                     break;
                 case WifiManager.WIFI_STATE_UNKNOWN:
                     //未知
-                    Log.d(TAG, "未知");
+                    Log.d(TAG, "Unknown");
                     break;
             }
         }

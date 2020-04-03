@@ -32,9 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by Lin Yaotian on 2018/2/1.
- */
+
 
 public class MsgRvAdapter extends BaseRecyclerViewAdapter<MessageBean> {
 
@@ -478,11 +476,11 @@ public class MsgRvAdapter extends BaseRecyclerViewAdapter<MessageBean> {
                     break;
                 case FileState.RECEIVE_FILE_FINISH:
                     mPbReceive.setVisibility(View.INVISIBLE);
-                    mTvReceiveStates.setText("已下载");
+                    mTvReceiveStates.setText("Downloaded");
                     break;
                 case FileState.RECEIVE_FILE_ERROR:
                     mPbReceive.setVisibility(View.INVISIBLE);
-                    mTvReceiveStates.setText("传输出错");
+                    mTvReceiveStates.setText("Transmission error");
                     break;
             }
         }
@@ -532,11 +530,11 @@ public class MsgRvAdapter extends BaseRecyclerViewAdapter<MessageBean> {
                     break;
                 case FileState.SEND_FILE_FINISH:
                     mPbSending.setVisibility(View.INVISIBLE);
-                    mTvSendStatus.setText("已发送");
+                    mTvSendStatus.setText("sent");
                     break;
                 case FileState.SEND_FILE_ERROR:
                     mPbSending.setVisibility(View.INVISIBLE);
-                    mTvSendStatus.setText("传输出错");
+                    mTvSendStatus.setText("Transmission error");
                     break;
             }
         }
@@ -605,12 +603,12 @@ public class MsgRvAdapter extends BaseRecyclerViewAdapter<MessageBean> {
             case FileState.SEND_FILE_FINISH:
             case FileState.RECEIVE_FILE_FINISH:
                 progressBar.setVisibility(View.INVISIBLE);
-                textView.setText("完成");
+                textView.setText("Complete");
                 break;
             case FileState.SEND_FILE_ERROR:
             case FileState.RECEIVE_FILE_ERROR:
                 progressBar.setVisibility(View.INVISIBLE);
-                textView.setText("失败");
+                textView.setText("Failure");
                 break;
         }
     }

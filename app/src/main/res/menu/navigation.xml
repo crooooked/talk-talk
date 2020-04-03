@@ -3,13 +3,12 @@
     <item
         android:id="@+id/nav_bu_1"
         android:icon="@drawable/ic_forum_black_24dp"
-        android:title="@string/conversation" />
-
+        android:title="@string/conversation"
+        android:checked="true"/>
     <item
         android:id="@+id/nav_bu_2"
         android:icon="@drawable/ic_supervisor_account_black_24dp"
         android:title="@string/friend" />
-
     <item
         android:id="@+id/nav_bu_3"
         android:icon="@drawable/ic_bubble_chart_black_24dp"

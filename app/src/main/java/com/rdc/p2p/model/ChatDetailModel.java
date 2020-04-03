@@ -13,9 +13,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Created by Lin Yaotian on 2018/5/17.
- */
+
 public class ChatDetailModel implements ChatDetailContract.Model {
 
     private static final String TAG = "ChatDetailModel";
@@ -50,7 +48,7 @@ public class ChatDetailModel implements ChatDetailContract.Model {
 
             @Override
             public void sendMsgError(int position) {
-                mPresenter.sendMsgError(position,"Socket连接已断开！");
+                mPresenter.sendMsgError(position,"Socket connection is disconnected!");
             }
 
             @Override
@@ -78,7 +76,7 @@ public class ChatDetailModel implements ChatDetailContract.Model {
                             msg.setFileState(FileState.SEND_FILE_ERROR);
                             mPresenter.fileSending(position,msg);
                         }else {
-                            mPresenter.sendMsgError(position,"Socket连接已断开！");
+                            mPresenter.sendMsgError(position,"Socket connection is disconnected!");
                         }
                     }
                 }
@@ -91,7 +89,7 @@ public class ChatDetailModel implements ChatDetailContract.Model {
                 msg.setFileState(FileState.SEND_FILE_ERROR);
                 mPresenter.fileSending(position,msg);
             }else {
-                mPresenter.sendMsgError(position,"Socket连接已断开！");
+                mPresenter.sendMsgError(position,"Socket connection is disconnected!");
             }
         }else {
             //Socket正在连接中
@@ -99,7 +97,7 @@ public class ChatDetailModel implements ChatDetailContract.Model {
                 msg.setFileState(FileState.SEND_FILE_ERROR);
                 mPresenter.fileSending(position,msg);
             }else {
-                mPresenter.sendMsgError(position,"Socket连接已断开！");
+                mPresenter.sendMsgError(position,"Socket connection is disconnected!");
             }
         }
     }

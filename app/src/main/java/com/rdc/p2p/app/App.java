@@ -4,15 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 
 import com.rdc.p2p.bean.UserBean;
 import com.rdc.p2p.util.UserUtil;
 
 import org.litepal.LitePal;
 
-/**
- * Created by Lin Yaotian on 2018/5/1.
- */
 
 public class App extends Application {
     
@@ -20,6 +18,7 @@ public class App extends Application {
     private static Context sContxet;
     private static UserBean sUserBean;
     private static String sMyIP;
+    private static Bitmap sMyBg;
 
     @Override
     public void onCreate() {
@@ -28,6 +27,7 @@ public class App extends Application {
         sContxet = getApplicationContext();
         sUserBean = getUserBean();
         sMyIP = getMyIP();
+        sMyBg=null;
     }
 
     public static String getMyIP() {
@@ -60,4 +60,8 @@ public class App extends Application {
     public static void setContxet(Context sContxet) {
         App.sContxet = sContxet;
     }
+
+    public static void setBg(Bitmap bitmap){App.sMyBg=bitmap;}
+
+    public static Bitmap getBg(){return App.sMyBg;}
 }

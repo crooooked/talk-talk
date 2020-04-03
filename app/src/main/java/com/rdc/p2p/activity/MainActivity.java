@@ -2,12 +2,15 @@ package com.rdc.p2p.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
@@ -25,18 +28,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rdc.p2p.R;
 import com.rdc.p2p.base.BaseActivity;
 import com.rdc.p2p.base.BasePresenter;
+import com.rdc.p2p.database.DBOpenHelper;
 import com.rdc.p2p.fragment.PeerListFragment;
 import com.rdc.p2p.fragment.ScanDeviceFragment;
 import com.rdc.p2p.manager.SocketManager;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import butterknife.BindView;
 
@@ -44,26 +58,12 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-//    @BindView(R.id.dl_drawer_act_main)
-//    DrawerLayout mDrawerLayout;
-//    @BindView(R.id.ll_bottom_left_layout_act_main)
-//    LinearLayout mLlBottomLeft;
-//    @BindView(R.id.iv_chat_act_main)
-//    ImageView mIvChat;
-//    @BindView(R.id.iv_peer_list_act_main)
-//    ImageView mIvPeerList;
-//    @BindView(R.id.tv_chat_act_main)
-//    TextView mTvChat;
-//    @BindView(R.id.tv_peer_list_act_main)
-//    TextView mTvPeerList;
-//    @BindView(R.id.ll_bottom_right_layout_act_main)
-//    LinearLayout mLlBottomRight;
     @BindView(R.id.vp_act_main)
     ViewPager mVpContent;
 
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private boolean checking = true;// true 选中聊天列表 , false 选中 聊天室
-    private static final String TAG = "LYT";
+    private static final String TAG = "conversation";
     private static final int BROADCAST_PORT = 3000;
     private static final String BROADCAST_IP = "239.0.0.3";
     private MulticastSocket mSocket;
@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -174,89 +175,37 @@ public class MainActivity extends BaseActivity {
                     mScanDeviceFragment.setCancelable(false);
                     mScanDeviceFragment.show(getSupportFragmentManager(),"scanDevice");
                 }else {
-                    showToast("ServerSocket未连接，请检查WIFI！");
+                    showToast("ServerSocket isn't connected. Check WIFI!");
                 }
                 break;
-//            case android.R.id.home:
-//                mDrawerLayout.openDrawer(GravityCompat.START);
-//                break;
         }
         return true;
     }
 
     @Override
     protected void initListener() {
-//        mLlBottomLeft.setOnClickListener(this);
-//        mLlBottomRight.setOnClickListener(this);
+        final BottomNavigationView bnv = (BottomNavigationView) findViewById(R.id.navigation);
+        bnv.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                        switch (item.getItemId()) {
+                            case R.id.nav_bu_2:
+                                Intent intent = new Intent(MainActivity.this, FriendActivity.class);
+                                startActivity(intent);
+                                finish();break;
+                            case R.id.nav_bu_3:
+                                Intent intent1 = new Intent(MainActivity.this, MyActivity.class);
+                                startActivity(intent1);
+                                finish();break;
+
+
+                        }
+                        return true;
+                    }
+                });
+
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        switch (view.getId()){
-//            case R.id.ll_bottom_right_layout_act_main:
-//                mIvChat.setImageResource(R.drawable.iv_chat_pressed);
-//                mTvChat.setTextColor(getResources().getColor(R.color.colorPrimary));
-//                mIvPeerList.setImageResource(R.drawable.iv_peer_list_normal);
-//                mTvPeerList.setTextColor(getResources().getColor(R.color.grey_text_or_bg));
-//                break;
-//            case R.id.ll_bottom_left_layout_act_main:
-//                mIvChat.setImageResource(R.drawable.iv_chat_normal);
-//                mTvChat.setTextColor(getResources().getColor(R.color.grey_text_or_bg));
-//                mIvPeerList.setImageResource(R.drawable.iv_peer_list_pressed);
-//                mTvPeerList.setTextColor(getResources().getColor(R.color.colorPrimary));
-//                Log.d(TAG, "SocketManager:"+ SocketManager.getInstance().toString());
-//                break;
-//        }
-//    }
-
-
-//    private void initServerSocket() {
-//        try {
-//            mSocket = new MulticastSocket(BROADCAST_PORT);
-//            mAddress = InetAddress.getByName(BROADCAST_IP);
-//            mSocket.setTimeToLive(2);
-//            mSocket.joinGroup(mAddress);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private void receiveBroadcast(){
-//        byte buf[] = new byte[1024];
-//        DatagramPacket packet = new DatagramPacket(buf,buf.length,mAddress,BROADCAST_PORT);
-//        try {
-//            mSocket.receive(packet);
-//            String content = new String(buf,0,packet.getLength());
-//            Log.d(TAG, "receiveBroadcast: "+content);
-//            MessageEntity message = new MessageEntity();
-//            message.what = 0;
-//            message.obj = content;
-//            mHandler.sendMessage(message);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private void sendMultiBroadcast(){
-//        DatagramPacket packet;
-//        String msg = mEtInput.getText().toString();
-//        if (!msg.equals("")){
-//            byte[] bytes = msg.getBytes();
-//            packet = new DatagramPacket(bytes,bytes.length,mAddress,BROADCAST_PORT);
-//            try {
-//                mSocket.send(packet);
-//                Log.d(TAG, "sendMultiBroadcast: success");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                Log.d(TAG, "sendMultiBroadcast: error");
-//            }
-//        }else {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Toast.makeText(MainActivity.this, "输入不能为空！", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
 }

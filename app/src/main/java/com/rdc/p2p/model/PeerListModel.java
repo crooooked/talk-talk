@@ -24,9 +24,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Created by Lin Yaotian on 2018/5/16.
- */
+
 public class PeerListModel implements PeerListContract.Model {
 
     public static final String TAG = "PeerListModel";
@@ -61,7 +59,7 @@ public class PeerListModel implements PeerListContract.Model {
                     mServerSocket = new ServerSocket(3000);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    mPresenter.serverSocketError("启动ServerSocket失败，端口3000被占用！");
+                    mPresenter.serverSocketError("Start ServerSocket failed port 3000 is occupied!");
                     isInitServerSocket.set(false);
                     return;
                 }
@@ -76,7 +74,7 @@ public class PeerListModel implements PeerListContract.Model {
                     try {
                         socket = mServerSocket.accept();
                         String ip = socket.getInetAddress().getHostAddress();
-                        Log.d(TAG, "接收到一个socket连接,ip:" + ip);
+                        Log.d(TAG, "Receives a socket connection IP:" + ip);
                         SocketManager socketManager = SocketManager.getInstance();
                         if (socketManager.isClosedSocket(ip)){
                             SocketThread socketThread = new SocketThread(socket,mPresenter);
@@ -104,7 +102,7 @@ public class PeerListModel implements PeerListContract.Model {
     @Override
     public void linkPeers(final List<String> list) {
         if (!isInitServerSocket()){
-            mPresenter.linkPeerError("请检查WIFI!","");
+            mPresenter.linkPeerError("Please check WIFI!","");
             mPresenter.updatePeerList(new ArrayList<PeerBean>());
         }else {
             new Thread(new Runnable() {
@@ -137,7 +135,7 @@ public class PeerListModel implements PeerListContract.Model {
             @Override
             public void run() {
                 if (!linkSocket(targetIp)){
-                    mPresenter.linkPeerError("建立Socket连接失败，对方已退出网络或网络错误！",targetIp);
+                    mPresenter.linkPeerError("Build Socket connection failed, opponent has exited network or network error!",targetIp);
                 }else {
                     mPresenter.linkPeerSuccess(targetIp);
                 }
@@ -152,7 +150,7 @@ public class PeerListModel implements PeerListContract.Model {
             Log.d(TAG, "linkPeers: ip"+targetIp+"success !");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d(TAG, "linkPeer ip = " + targetIp + ",连接 Socket 失败");
+            Log.d(TAG, "linkPeer ip = " + targetIp + ",Failure to connect Socket");
             return false;
         }
         SocketManager socketManager = SocketManager.getInstance();

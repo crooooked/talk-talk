@@ -2,9 +2,7 @@ package com.rdc.p2p.contract;
 
 import com.rdc.p2p.bean.MessageBean;
 
-/**
- * Created by Lin Yaotian on 2018/5/17.
- */
+
 public interface ChatDetailContract {
     interface View{
         void linkSocket();

@@ -12,9 +12,7 @@ import com.rdc.p2p.util.ScanDeviceUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lin Yaotian on 2018/5/14.
- */
+
 public class ScanDeviceModel extends BaseModel implements ScanDeviceContract.Model {
 
     private ScanDeviceContract.Presenter mPresenter;
@@ -29,7 +27,7 @@ public class ScanDeviceModel extends BaseModel implements ScanDeviceContract.Mod
             @Override
             public void run() {
                 if (!ScanDeviceUtil.getInstance().getLocalAddressPrefix()){
-                    mPresenter.scanDeviceError("扫描端口失败，请检查WIFI连接！");
+                    mPresenter.scanDeviceError("Scan port failed please check WIFI connection!");
                     return;
                 }
                 App.setMyIP(ScanDeviceUtil.getInstance().getDevAddress());
@@ -38,7 +36,7 @@ public class ScanDeviceModel extends BaseModel implements ScanDeviceContract.Mod
                 while (true) {
                     if (System.currentTimeMillis() - startTime > 30000){
                         //如果扫描时间超过30秒，则提示扫描端口超时！
-                        mPresenter.scanDeviceError("扫描端口超时，请重新扫描端口！");
+                        mPresenter.scanDeviceError("Scan port timeout please scan port again!");
                         break;
                     }
                     try {

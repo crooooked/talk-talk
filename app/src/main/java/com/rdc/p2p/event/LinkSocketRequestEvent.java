@@ -1,8 +1,6 @@
 package com.rdc.p2p.event;
 
-/**
- * Created by Lin Yaotian on 2018/5/30.
- */
+
 public class LinkSocketRequestEvent {
     private String targetIp;
 

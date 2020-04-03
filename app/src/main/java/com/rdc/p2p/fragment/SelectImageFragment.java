@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.rdc.p2p.R;
 import com.rdc.p2p.activity.LoginActivity;
+import com.rdc.p2p.activity.RegisterActivity;
 import com.rdc.p2p.adapter.UserImageRvAdapter;
 import com.rdc.p2p.bean.ImageBean;
 import com.rdc.p2p.listener.OnClickRecyclerViewListener;
@@ -19,10 +20,7 @@ import com.rdc.p2p.listener.OnClickRecyclerViewListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lin Yaotian on 2018/5/1.
- * 登录时选择头像界面
- */
+
 public class SelectImageFragment extends DialogFragment {
 
     private View mDialogView;

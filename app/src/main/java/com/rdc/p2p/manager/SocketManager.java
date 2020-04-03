@@ -19,9 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Created by Lin Yaotian on 2018/5/17.
- */
+
 public class SocketManager {
 
     private static final String TAG = "SocketManager";

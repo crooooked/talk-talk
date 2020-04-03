@@ -4,9 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Lin Yaotian on 2018/5/20.
- */
+
 public class ProgressTextUtil {
     public static String getProgressText(long time) {
         Calendar calendar = Calendar.getInstance();

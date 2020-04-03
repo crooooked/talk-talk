@@ -9,9 +9,7 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by Lin Yaotian on 2018/5/20.
- */
+
 public class AudioRecorderUtil {
 
     //文件路径
@@ -104,7 +102,6 @@ public class AudioRecorderUtil {
             return 0L;
         }
         endTime = System.currentTimeMillis();
-        //有一些网友反应在5.0以上在调用stop的时候会报错，翻阅了一下谷歌文档发现上面确实写的有可能会报错的情况，捕获异常清理一下就行了，感谢大家反馈！
         try {
             mMediaRecorder.stop();
             mMediaRecorder.reset();

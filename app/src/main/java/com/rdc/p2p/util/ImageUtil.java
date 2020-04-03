@@ -10,9 +10,7 @@ import com.zxy.tiny.callback.FileCallback;
 
 import java.io.File;
 
-/**
- * Created by Lin Yaotian on 2018/5/1.
- */
+
 public class ImageUtil {
 
     private static File mFile;

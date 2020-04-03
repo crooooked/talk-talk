@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ChatDetailActivity"
-    android:id="@+id/layout_root_act_chat_detail">
-
+    android:id="@+id/layout_root_act_chat_detail"
+    >
+    <ImageView
+        android:id="@+id/my_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="@id/layout_root_act_chat_detail"
+        app:layout_constraintLeft_toLeftOf="@id/layout_root_act_chat_detail"
+        app:layout_constraintRight_toRightOf="@id/layout_root_act_chat_detail"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_root_act_chat_detail"></ImageView>
     <include
         android:id="@+id/toolbar"
         layout="@layout/layout_toolbar"
@@ -130,6 +139,7 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_msg_list_act_chat_detail"

@@ -17,9 +17,7 @@ import com.rdc.p2p.util.ImageUtil;
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by Lin Yaotian on 2018/5/16.
- */
+
 public class PeerListRvAdapter extends BaseRecyclerViewAdapter<PeerBean> {
 
     /**

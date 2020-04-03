@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.FriendActivity"
-    android:id="@+id/list_view_friend">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/layout_toolbar"
@@ -14,29 +11,41 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recent_friends"/>
+    <TextView
+        android:id="@+id/recent_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey_message_left_audio_left"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:textAlignment="center"
+        android:text="@string/recent_friends"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        ></TextView>
     <ListView
-        android:id="@+id/list_view_friend_detail"
+        android:id="@+id/vp_act_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:dividerHeight="1px"
-        app:layout_constraintBottom_toBottomOf="@id/navigation"
+        app:layout_constraintBottom_toTopOf="@id/navigation_friend"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0"></ListView>
+        app:layout_constraintTop_toBottomOf="@id/recent_friends">
+    </ListView>
+
+
+
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/navigation_friend"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation" />
+
 </android.support.constraint.ConstraintLayout>

@@ -8,9 +8,7 @@ import android.util.Log;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
-/**
- * Created by Lin Yaotian on 2018/5/22.
- */
+
 public class MediaPlayerUtil implements MediaPlayer.OnPreparedListener {
 
     private static MediaPlayer mMediaPlayer;

@@ -30,9 +30,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Created by Lin Yaotian on 2018/5/20.
- */
+
 public class SocketThread extends Thread {
 
     private static final int DESTROY = 0;
@@ -319,7 +317,7 @@ public class SocketThread extends Thread {
                     case Protocol.FILE:
                         int fileSize = dis.readInt();
                         String fileName = dis.readUTF();//文件名，包括了文件类型(e.g: pic.jpg)
-                        Log.d(TAG, "run: 接收到一个文件="+fileName);
+                        Log.d(TAG, "run: Receive a file ="+fileName);
                         byte[] fileBytes = new byte[1024*1024];
                         //解析出文件名和类型
                         int dotIndex = fileName.lastIndexOf(".");
@@ -418,17 +416,4 @@ public class SocketThread extends Thread {
         return peer;
     }
 
-//    private Message getDestroyMsg(){
-//        Message destroyMsg = new Message();
-//        destroyMsg.obj = mTargetIp;
-//        destroyMsg.what = DESTROY;
-//        return destroyMsg;
-//    }
-//
-//    private Message getDelayDestroyMsg(){
-//        Message delayDestroyMsg = new Message();
-//        delayDestroyMsg.obj = mTargetIp;
-//        delayDestroyMsg.what = DELAY_DESTROY;
-//        return delayDestroyMsg;
-//    }
 }

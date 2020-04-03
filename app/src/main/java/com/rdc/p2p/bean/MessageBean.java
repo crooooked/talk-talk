@@ -7,9 +7,7 @@ import org.litepal.crud.DataSupport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Lin Yaotian on 2018/5/16.
- */
+
 public class MessageBean extends DataSupport implements Cloneable {
     private String userIp;//消息发送方IP
     private String belongIp; //数据库存储标识，区分消息归属方(例如 我和A聊天，则我本地存储的我和A之间相互发送的 MessageBean 的 belongIp 都是 A 的IP)

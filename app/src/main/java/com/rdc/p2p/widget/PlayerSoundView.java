@@ -10,9 +10,7 @@ import android.view.View;
 
 import com.rdc.p2p.R;
 
-/**
- * Created by Lin Yaotian on 2018/5/22.
- */
+
 public class PlayerSoundView extends View {
 
     private static final String TAG = "PlayerSoundView";

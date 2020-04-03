@@ -1,8 +1,6 @@
 package com.rdc.p2p.config;
 
-/**
- * Created by Lin Yaotian on 2018/5/17.
- */
+
 public class Protocol {
 
     public static final int TEXT = 0;//文本

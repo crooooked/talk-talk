@@ -5,9 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-/**
- * Created by Lin Yaotian on 2018/5/18.
- */
+
 public class NetUtil {
     /**
      * 判断是wifi还是3g网络

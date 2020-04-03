@@ -1,8 +1,6 @@
 package com.rdc.p2p.config;
 
-/**
- * Created by Lin Yaotian on 2018/6/1.
- */
+
 public class FileState {
     public static final int SEND_FILE_ING = 0;//正在发送
     public static final int RECEIVE_FILE_ING = 1;//正在接收
